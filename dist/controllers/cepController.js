@@ -12,19 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const buscarCep_1 = __importDefault(require("../services/buscarCep"));
-class CepController {
-    buscar(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const { cep } = req.params;
-            try {
-                const dadosCep = yield buscarCep_1.default.buscarCEP(cep);
-                res.status(200).json(dadosCep);
-            }
-            catch (error) {
-                res.status(400).json({ message: error.message });
-            }
-        });
-    }
+exports.getCepData = getCepData;
+const axios_1 = __importDefault(require("axios"));
+function getCepData(cep) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield axios_1.default.get(`https://viacep.com.br/ws/${cep}/json/`);
+            if (response.data.erro)
+                throw new Error("CEP inválido.");
+            return response.data;
+        }
+        catch (error) {
+            throw new Error("Erro ao buscar CEP.");
+        }
+    });
 }
-exports.default = new CepController();
+// import { Request, Response } from 'express';
+// import BuscarCepService from '../services/buscarCep';
+// class CepController {
+//   async buscar(req: Request, res: Response) {
+//     const { cep } = req.params;
+//     try {
+//       const dadosCep = await BuscarCepService.buscarCEP(cep);
+//       res.status(200).json(dadosCep);
+//     } catch (error: any) {
+//       res.status(400).json({ message: error.message });
+//     }
+//   }
+// }
+// export default new CepController();

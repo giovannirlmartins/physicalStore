@@ -1,20 +1,25 @@
 {
   "name": "cepproject",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": ""
+    "start": "node .",
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
   },
   "author": "Giovanni Martins",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "axios": "^1.8.2",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "mongoose": "^8.12.1",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
-    "@types/express": "^5.0.0"
+    "@types/express": "^5.0.0",
+    "ts-node-dev": "^2.0.0"
   }
 }
